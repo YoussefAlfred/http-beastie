@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Youssef Gohar — Bio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --ink: #f0ece3;
+      --gold: #c9a84c;
+      --gold-light: #f2d07a;
+      --muted: #6b6660;
+      --accent: #e85d3a;
+      --card-bg: #13131a;
+      --border: rgba(201,168,76,0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--gold);
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease, width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s ease, width 0.2s, height 0.2s;
+      opacity: 0.6;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.35;
+    }
+
+    /* ---- HERO ---- */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.2rem, 6vw, 6.5rem);
+      font-weight: 900;
+      line-height: 0.92;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s forwards;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-tagline {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.9;
+      max-width: 380px;
+      margin-bottom: 52px;
+      letter-spacing: 0.05em;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s forwards;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+
+    .badge {
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      font-size: 0.66rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      border-radius: 2px;
+      background: rgba(201,168,76,0.04);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .badge:hover {
+      background: rgba(201,168,76,0.12);
+      border-color: var(--gold);
+    }
+
+    /* Hero right — large decorative number */
+    .hero-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-right::before {
+      content: 'YG';
+      font-family: 'Playfair Display', serif;
+      font-size: 38vw;
+      font-weight: 900;
+      color: rgba(201,168,76,0.04);
+      position: absolute;
+      line-height: 1;
+      user-select: none;
+      animation: slowSpin 60s linear infinite;
+    }
+
+    .portrait-ring {
+      width: 340px; height: 340px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: fadeIn 1.2s 0.5s both;
+    }
+    .portrait-ring::after {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      border-radius: 50%;
+      border: 1px dashed rgba(201,168,76,0.15);
+      animation: slowSpin 20s linear infinite reverse;
+    }
+
+    .portrait-inner {
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .portrait-initials {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: -4px;
+    }
+
+    .portrait-glow {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 60% 40%, rgba(201,168,76,0.12) 0%, transparent 70%);
+    }
+
+    /* Scrolling ticker */
+    .ticker-wrap {
+      background: var(--gold);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 10px 0;
+    }
+    .ticker-track {
+      display: inline-block;
+      animation: ticker 25s linear infinite;
+    }
+    .ticker-track span {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bg);
+      font-weight: 500;
+      padding: 0 36px;
+    }
+    .ticker-track span::before {
+      content: '✦ ';
+    }
+
+    /* ---- SECTIONS ---- */
+    section {
+      padding: 100px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 48px;
+    }
+
+    /* ---- ABOUT GRID ---- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 0.82rem;
+      line-height: 2;
+      color: rgba(240,236,227,0.75);
+      margin-bottom: 20px;
+      letter-spacing: 0.03em;
+    }
+
+    .about-text p strong {
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+
+    .stat-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transition: border-color 0.25s, background 0.25s;
+      cursor: default;
+    }
+    .stat-card:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.05);
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      min-width: 80px;
+    }
+
+    .stat-desc {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      line-height: 1.7;
+    }
+
+    /* ---- SPORTS MOSAIC ---- */
+    .sports-bg {
+      background: linear-gradient(180deg, var(--bg) 0%, #0d0d14 50%, var(--bg) 100%);
+    }
+
+    .sports-mosaic {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+
+    .sport-tile {
+      aspect-ratio: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: default;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sport-tile::before {
+      content: attr(data-sport);
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      font-weight: 900;
+      color: rgba(201,168,76,0.04);
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      white-space: nowrap;
+    }
+
+    .sport-tile:hover {
+      background: rgba(201,168,76,0.08);
+      border-color: var(--gold);
+    }
+    .sport-tile:hover .sport-icon { transform: scale(1.15) rotate(-5deg); }
+
+    .sport-icon { font-size: 2.4rem; transition: transform 0.3s; z-index: 1; }
+    .sport-name {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      z-index: 1;
+    }
+    .sport-tile:hover .sport-name { color: var(--gold-light); }
+
+    /* ---- MATH SECTION ---- */
+    .math-section {
+      position: relative;
+    }
+
+    .math-bg-formula {
+      position: absolute;
+      right: 0;
+      top: 60px;
+      font-family: 'Playfair Display', serif;
+      font-size: 8rem;
+      color: rgba(201,168,76,0.03);
+      pointer-events: none;
+      white-space: nowrap;
+      font-style: italic;
+    }
+
+    .math-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .math-card {
+      border-left: 2px solid var(--gold);
+      padding: 28px 32px;
+      background: var(--card-bg);
+      transition: transform 0.3s;
+    }
+    .math-card:hover { transform: translateX(6px); }
+
+    .math-card-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .math-card-body {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .math-card-sub {
+      margin-top: 10px;
+      font-size: 0.7rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* ---- TIMELINE ---- */
+    .timeline {
+      position: relative;
+      padding-left: 40px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+
+    .timeline-item {
+      margin-bottom: 44px;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -44px; top: 6px;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
+    }
+
+    .timeline-date {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .timeline-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .timeline-desc {
+      font-size: 0.74rem;
+      color: var(--muted);
+      line-height: 1.9;
+      letter-spacing: 0.03em;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    footer strong {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--gold);
+      font-size: 1.1rem;
+    }
+
+    /* ---- DIVIDER ---- */
+    .ornament {
+      text-align: center;
+      color: var(--gold);
+      font-size: 1.1rem;
+      opacity: 0.4;
+      letter-spacing: 1em;
+      margin: 20px 0;
+    }
+
+    /* ---- KEYFRAMES ---- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes slowSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* ---- SCROLL REVEAL ---- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .about-grid, .math-content { grid-template-columns: 1fr; }
+      .sports-mosaic { grid-template-columns: repeat(2, 1fr); }
+      section { padding: 60px 28px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Cairo · 2025 · Engineering</p>
+      <h1 class="hero-name">Youssef<br><em>Gohar</em></h1>
+      <p class="hero-tagline">
+        A freshman who chose blueprints over blackboards —
+        though the equations still follow me everywhere.
+        Full scholar. Restless athlete. Reluctant poet of mathematics.
+      </p>
+      <div class="hero-badges">
+        <span class="badge">AUC Freshman</span>
+        <span class="badge">Full Excellence Scholarship</span>
+        <span class="badge">Engineering</span>
+        <span class="badge">Multi-Sport Athlete</span>
+        <span class="badge">Math Enthusiast</span>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="portrait-ring">
+        <div class="portrait-inner">
+          <div class="portrait-glow"></div>
+          <span class="portrait-initials">YG</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== TICKER ===== -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-track">
+      <span>AUC Class of 2028</span>
+      <span>Full Excellence Scholar</span>
+      <span>Engineer by Path</span>
+      <span>Mathematician at Heart</span>
+      <span>Athlete by Nature</span>
+      <span>Cairo, Egypt</span>
+      <span>AUC Class of 2028</span>
+      <span>Full Excellence Scholar</span>
+      <span>Engineer by Path</span>
+      <span>Mathematician at Heart</span>
+      <span>Athlete by Nature</span>
+      <span>Cairo, Egypt</span>
+    </div>
+  </div>
+
+  <!-- ===== ABOUT ===== -->
+  <section>
+    <div class="section-label">001 — About</div>
+    <h2 class="section-title reveal">The Person<br><em style="font-family:'Playfair Display',serif; font-style:italic; color:var(--gold);">Behind the Numbers</em></h2>
+
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>
+          My name is <strong>Youssef Gohar</strong>, and I arrived at the American University
+          in Cairo with a scholarship, a gym bag, and a notebook full of half-solved integrals.
+          Freshman year. Everything is new, and somehow nothing surprises me.
+        </p>
+        <p>
+          I earned a <strong>Full Excellence Scholarship</strong> — the kind that tells you
+          the work you put in during high school actually meant something. It also means
+          I have absolutely no excuse not to perform.
+        </p>
+        <p>
+          I chose <strong>Engineering</strong>. Not because I stopped loving mathematics —
+          in fact I never did. But I wanted my equations to leave marks on the physical world.
+          Structures. Systems. Things you can point at. Still, late at night, pure math
+          pulls me back like gravity.
+        </p>
+        <p>
+          When I am not in class or buried in problem sets, I am almost certainly on a field,
+          a court, a track, or in a pool. Sport is not a hobby for me — it is a second language.
+        </p>
+      </div>
+
+      <div class="stat-stack">
+        <div class="stat-card">
+          <div class="stat-num">1st</div>
+          <div class="stat-desc">Year at AUC<br>Engineering Faculty</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">100%</div>
+          <div class="stat-desc">Scholarship Coverage<br>Full Excellence Award</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">8+</div>
+          <div class="stat-desc">Sports Actively Played<br>& Competed In</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">∞</div>
+          <div class="stat-desc">Unsolved Problems<br>Waiting on the Shelf</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <!-- ===== SPORTS ===== -->
+  <section class="sports-bg">
+    <div class="section-label">002 — Athletics</div>
+    <h2 class="section-title reveal">Many Courts,<br><em style="font-family:'Playfair Display',serif; font-style:italic; color:var(--gold);">One Athlete</em></h2>
+
+    <div class="sports-mosaic reveal">
+      <div class="sport-tile" data-sport="⚽">
+        <div class="sport-icon">⚽</div>
+        <div class="sport-name">Football</div>
+      </div>
+      <div class="sport-tile" data-sport="🏀">
+        <div class="sport-icon">🏀</div>
+        <div class="sport-name">Basketball</div>
+      </div>
+      <div class="sport-tile" data-sport="🎾">
+        <div class="sport-icon">🎾</div>
+        <div class="sport-name">Tennis</div>
+      </div>
+      <div class="sport-tile" data-sport="🏊">
+        <div class="sport-icon">🏊</div>
+        <div class="sport-name">Swimming</div>
+      </div>
+      <div class="sport-tile" data-sport="🏋">
+        <div class="sport-icon">🏋️</div>
+        <div class="sport-name">Weightlifting</div>
+      </div>
+      <div class="sport-tile" data-sport="🏃">
+        <div class="sport-icon">🏃</div>
+        <div class="sport-name">Track</div>
+      </div>
+      <div class="sport-tile" data-sport="🥊">
+        <div class="sport-icon">🥊</div>
+        <div class="sport-name">Boxing</div>
+      </div>
+      <div class="sport-tile" data-sport="🏐">
+        <div class="sport-icon">🏐</div>
+        <div class="sport-name">Volleyball</div>
+      </div>
+    </div>
+
+    <p class="reveal" style="margin-top:40px; font-size:0.76rem; color:var(--muted); line-height:2; letter-spacing:0.04em; max-width:640px;">
+      I have never found a sport I didn't enjoy. I've competed across team and individual
+      disciplines, and what I've learned is that sport and mathematics are surprisingly similar —
+      both reward pattern recognition, strategic thinking, and the willingness to start again from zero.
+    </p>
+  </section>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <!-- ===== MATH PASSION ===== -->
+  <section class="math-section">
+    <div class="math-bg-formula">e^iπ + 1 = 0</div>
+    <div class="section-label">003 — Passion</div>
+    <h2 class="section-title reveal">Mathematics<br><em style="font-family:'Playfair Display',serif; font-style:italic; color:var(--gold);">as a Way of Seeing</em></h2>
+
+    <div class="math-content reveal">
+      <div class="math-card">
+        <div class="math-card-label">The Obsession</div>
+        <div class="math-card-body">"Pure mathematics is, in its way, the poetry of logical ideas."</div>
+        <div class="math-card-sub">
+          From number theory to differential equations, I approach math
+          the way others approach art — with admiration, compulsion, and the
+          quiet joy of finding something beautiful in something abstract.
+        </div>
+      </div>
+
+      <div class="math-card">
+        <div class="math-card-label">The Contradiction</div>
+        <div class="math-card-body">Engineering was not the "safe" choice — it was the brave one.</div>
+        <div class="math-card-sub">
+          I could have studied pure mathematics. Instead I chose to carry that love
+          into a discipline that demands results. Every proof I've ever admired
+          now has a deadline, a material, and a load-bearing constraint.
+        </div>
+      </div>
+
+      <div class="math-card">
+        <div class="math-card-label">Favorite Areas</div>
+        <div class="math-card-body">Calculus · Linear Algebra · Combinatorics · Complex Analysis</div>
+        <div class="math-card-sub">
+          I find combinatorics meditative and calculus visceral.
+          Complex analysis feels like discovering a secret room inside
+          a house you already thought you knew perfectly well.
+        </div>
+      </div>
+
+      <div class="math-card">
+        <div class="math-card-label">The Goal</div>
+        <div class="math-card-body">Build things that only someone who loves math would think of.</div>
+        <div class="math-card-sub">
+          Engineering and mathematics aren't opposites.
+          The most elegant bridges, chips, and algorithms in history
+          were made by people who refused to separate the two.
+          I intend to be one of them.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <!-- ===== TIMELINE ===== -->
+  <section>
+    <div class="section-label">004 — Journey</div>
+    <h2 class="section-title reveal">So Far, <em style="font-family:'Playfair Display',serif; font-style:italic; color:var(--gold);">So Good</em></h2>
+
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-date">2007 — Cairo, Egypt</div>
+        <div class="timeline-title">Born Into a City That Never Stands Still</div>
+        <div class="timeline-desc">
+          Cairo shaped my pace. A city of 20 million teaches you to think fast,
+          adapt faster, and find beauty in organized chaos — which, incidentally,
+          is also a decent description of multivariable calculus.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2015 — First Sport</div>
+        <div class="timeline-title">Football, Then Everything Else</div>
+        <div class="timeline-desc">
+          Started with football, ended up never stopping. Every new sport
+          felt like a new language I already somehow half-knew.
+          Competed regionally in football and swimming by secondary school.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2019 — Secondary School</div>
+        <div class="timeline-title">Mathematics Becomes Personal</div>
+        <div class="timeline-desc">
+          A teacher handed me a problem no one else in the class could solve.
+          I stayed up until 2 a.m. and found a solution using a method we hadn't
+          been taught yet. That night I understood what it felt like to think.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2024 — AUC Admission</div>
+        <div class="timeline-title">Full Excellence Scholarship, Engineering Track</div>
+        <div class="timeline-desc">
+          Awarded the Full Excellence Scholarship. Enrolled in the School of Science
+          and Engineering. Showed up on campus with high expectations and
+          at least three unresolved debates about whether to minor in math.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Now — Freshman Year</div>
+        <div class="timeline-title">In Progress</div>
+        <div class="timeline-desc">
+          Attending AUC. Taking courses that challenge and excite me.
+          Playing sport whenever the schedule allows. Solving problems —
+          in all the senses of that phrase.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <strong>Youssef Gohar</strong>
+    <span>AUC · Class of 2028 · Engineering</span>
+    <span>Cairo, Egypt</span>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+      setTimeout(() => {
+        ring.style.left = e.clientX + 'px';
+        ring.style.top  = e.clientY + 'px';
+      }, 60);
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
